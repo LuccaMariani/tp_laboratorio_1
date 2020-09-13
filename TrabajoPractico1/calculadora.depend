@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1599256275 source:c:\users\sentey\documents\codeblocks\calculadora\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	"funcionesMatematicas.h"
+
+1599256356 source:c:\users\sentey\documents\codeblocks\calculadora\funcionesmatematicas.c
+	<stdio.h>
+	<stdlib.h>
+	"funcionesMatematicas.h"
+
+1599592793 c:\users\sentey\documents\codeblocks\calculadora\funcionesmatematicas.h
+
+1599943946 source:c:\users\sentey\documents\codeblocks\calculadora tp1\funcionescalculadora.c
+	<stdio.h>
+	<stdlib.h>
+
+1599943942 source:c:\users\sentey\documents\codeblocks\calculadora tp1\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+
