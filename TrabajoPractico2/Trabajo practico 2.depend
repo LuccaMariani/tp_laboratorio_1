@@ -1,0 +1,38 @@
+# depslib dependency file v1.0
+1601668245 source:c:\users\sentey\documents\codeblocks\trabajo practico 2\main.c
+	<stdio.h>
+	<stdlib.h>
+	<limits.h>
+	<string.h>
+	<ctype.h>
+	"bibliotecas.h"
+	"ArrayEmployees.h"
+
+1601158243 source:c:\users\sentey\documents\codeblocks\trabajo practico 2\funciones trabajo practico 2.c
+	<stdio.h>
+	<stdlib.h>
+
+1601158268 c:\users\sentey\documents\codeblocks\trabajo practico 2\biblioteca_employees.h
+
+1601668919 c:\users\sentey\documents\codeblocks\trabajo practico 2\bibliotecas.h
+	"ArrayEmployees.h"
+
+1601672553 source:c:\users\sentey\documents\codeblocks\trabajo practico 2\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"bibliotecas.h"
+	"ArrayEmployees.h"
+
+1601672443 c:\users\sentey\documents\codeblocks\trabajo practico 2\arrayemployees.h
+	"bibliotecas.h"
+
+1601672443 source:c:\users\sentey\documents\codeblocks\trabajo practico 2\arrayemployees.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"bibliotecas.h"
+	"ArrayEmployees.h"
+
