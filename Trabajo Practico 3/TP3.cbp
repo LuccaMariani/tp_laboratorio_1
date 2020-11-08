@@ -43,26 +43,18 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Employee.h" />
+		<Unit filename="Funciones.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="LinkedList.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="menu.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="menu.h" />
 		<Unit filename="parser.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="parser.h" />
-		<Unit filename="utn.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="utn.h" />
 		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
 			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>

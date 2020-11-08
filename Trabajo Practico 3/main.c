@@ -44,41 +44,65 @@ int main()
         switch(option)
         {
             case 1://CARGA TEXT
-                if(!controller_loadFromText("data.csv",listaEmpleados))
+                if(!flagLoadBinary && !flagLoadText)
                 {
-                    printf("El archivo de texto fue cargado con exito.\n\n");
-                    flagLoadText=1;
+                    if(!controller_loadFromText("data.csv",listaEmpleados))
+                    {
+                        printf("El archivo de texto fue cargado con exito.\n\n");
+                        flagLoadText=1;
+                    }
+                    else
+                    {
+                        printf("Hubo un error en el proceso de cargado del archivo de texto.\n\n");
+                    }
                 }
                 else
                 {
-                    printf("Hubo un error en el proceso de cargado del archivo de texto.\n\n");
+                    printf("\n- Error\nNo puede cargar los archivos 2 veces.\n\n");
+
                 }
                 system("pause");
                 break;
 
             case 2://CARGA BINARIOS
-                if(!controller_loadFromBinary("data.bin",listaEmpleados))
+                if(!flagLoadBinary && !flagLoadText)
                 {
-                    flagLoadBinary=1;
-                    printf("El Archivo binario fue cargado con exito.\n\n");
+                    if(!controller_loadFromBinary("data.bin",listaEmpleados))
+                    {
+                        flagLoadBinary=1;
+                        printf("El Archivo binario fue cargado con exito.\n\n");
+                    }
+                    else
+                    {
+                        printf("Hubo un error en el proceso de cargado del archivo de binario.\n\n");
+                    }
                 }
                 else
                 {
-                    printf("Hubo un error en el proceso de cargado del archivo de binario.\n\n");
+                    printf("\n- Error\nNo puede cargar los archivos 2 veces.\n\n");
+
                 }
                 system("pause");
                 break;
 
 
             case 3://ALTA EMPLEADO
-                if(!controller_addEmployee(listaEmpleados))
+                if(flagLoadText || flagLoadBinary)
                 {
-                    flagAddEmp=1;
-                    printf("El empleado fue cargado correctamente.\n\n");
+                    if(!controller_addEmployee(listaEmpleados))
+                    {
+                        flagAddEmp=1;
+                        printf("El empleado fue cargado correctamente.\n\n");
+                    }
+                    else
+                    {
+                        printf("Hubo un error en el proceso de alta del empleado.\n\n");
+                    }
                 }
                 else
                 {
-                    printf("Hubo un error en el proceso de alta del empleado.\n\n");
+                    printf("\n- Error\n Tiene que cargar los archivos primero.\n\n");
+
                 }
                 system("pause");
                 break;
@@ -89,10 +113,38 @@ int main()
 
 
             case 5://BAJA EMPLEADO
+                if(flagLoadText || flagLoadBinary)
+                {
+                    if(!controller_removeEmployee(listaEmpleados))
+                    {
+                        printf("El empleado fue dado de baja correctamente.\n\n");
+                    }
+                    else
+                    {
+                        printf("Hubo un error en el proceso de baja del empleado.\n\n");
+                    }
+                }
+                else
+                {
+                    printf("\n- Error\n Tiene que cargar los archivos primero.\n\n");
+                }
+                system("pause");
                 break;
 
 
             case 6://LISTA EMPLEADO
+                if(flagLoadText || flagLoadBinary)
+                {
+                    if(controller_ListEmployee(listaEmpleados))
+                    {
+                        printf("Hubo un error en el proceso de listado de los empleados.\n\n");
+                    }
+                }
+                else
+                {
+                    printf("\n- Error\n Tiene que cargar los archivos primero.\n\n");
+                }
+                system("pause");
                 break;
 
 
@@ -101,11 +153,29 @@ int main()
 
 
             case 8://SALVA TEXTO
+                if(!controller_saveAsText("data.csv",listaEmpleados))
+                {
+                    printf("TODO OK.\n\n");
+                }
+                else
+                {
+                    printf("ALGO MAL.\n\n");
+                }
                 break;
 
 
             case 9://SALVA BINARIO
+                if(!controller_saveAsBinary("data.bin",listaEmpleados))
+                {
+                    printf("TODO OK.\n\n");
+                }
+                else
+                {
+                    printf("ALGO MAL.\n\n");
+                }
                 break;
+
+
             case 10://SALE PROGRAMA
                 printf("\n- Estas seguro que deseas salir? (Si = s)\n>");
                 fflush(stdin);
