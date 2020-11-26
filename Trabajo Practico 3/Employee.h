@@ -38,6 +38,15 @@ int employee_removeEmployee(LinkedList* pArrayListEmployee);
 
 int employee_buscarIdEmployee(int id, LinkedList* pArrayEmp);
 
+int employee_editEmployee(LinkedList* pArrayListEmployee);
+
+int employee_sortEmployee();
+
+int ordenar_id(void* x, void* y);
+int ordenar_nombre(void* x, void* y);
+int ordenar_sueldo(void* x, void* y);
+int ordenar_horas(void* x, void* y);
+
 /*
 int employee_addEmployee
 
@@ -46,8 +55,8 @@ int employee_editEmployee
 int employee_removeEmployee
 
 int employee_listEmployee
-
-int employee_sortEmployee
 */
+
+
 
 #endif // employee_H_INCLUDED

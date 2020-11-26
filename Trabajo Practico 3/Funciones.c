@@ -37,6 +37,7 @@ int validar_StringCaracteres(char* pString)
 {
     int error=1;
     int valido=0;
+
     if(pString!=NULL)
     {
         fflush(stdin);

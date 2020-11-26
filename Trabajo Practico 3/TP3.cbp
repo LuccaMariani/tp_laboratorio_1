@@ -46,6 +46,7 @@
 		<Unit filename="Funciones.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="Funciones.h" />
 		<Unit filename="LinkedList.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />

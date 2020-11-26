@@ -19,7 +19,7 @@
  * \return int
  *
  */
-int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
+int controller_loadFromText(char* path, LinkedList* pArrayListEmployee)
 {
     int error=1;
 
@@ -45,7 +45,7 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
  * \return int
  *
  */
-int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
+int controller_loadFromBinary(char* path, LinkedList* pArrayListEmployee)
 {
     int error=1;
 
@@ -85,18 +85,6 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
     return error;
 }
 
-/** \brief Modificar datos de empleado
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
- */
-int controller_editEmployee(LinkedList* pArrayListEmployee)
-{
-    return 1;
-}
-
 /** \brief Baja de empleado
  *
  * \param path char*
@@ -106,25 +94,45 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_removeEmployee(LinkedList* pArrayListEmployee)
 {
-    int error=1;
+    int error=-1;
     if(pArrayListEmployee !=NULL)
     {
         system("cls");
         printf("    *Baja Empleado*\n");
         if(employee_removeEmployee(pArrayListEmployee))
         {
-            printf("\n");
-            printf(" Baja ejecutada con exito!!!\n");
+
             error=0;
-        }
-        else
-        {
-            printf(" Hubo un error\n");
         }
     }
 
     return error;
 }
+
+
+/** \brief Modificar datos de empleado
+ *
+ * \param pArrayListEmployee LinkedList* La lista de empleados
+ * \return int (1) si se modifico el empleado
+ *
+ */
+int controller_editEmployee(LinkedList* pArrayListEmployee)
+{
+    int error=-1;
+
+    if(pArrayListEmployee !=NULL)
+    {
+        system("cls");
+        printf("    *Modificar Empleados*\n\n");
+        if(employee_editEmployee(pArrayListEmployee))
+        {
+            error= 0;
+        }
+    }
+    return error;
+}
+
+
 
 /** \brief Listar empleados
  *
@@ -137,7 +145,7 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
 {
     int error=1;
 
-    if(pArrayListEmployee !=NULL)
+    if(pArrayListEmployee!=NULL)
     {
         system("cls");
         printf("    *Lista Empleados*\n\n");
@@ -163,7 +171,23 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_sortEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+    int error= -1;
+
+    if(pArrayListEmployee!=NULL)
+    {
+        system("cls");
+        printf("    *Ordenamiento de Empleados*\n\n");
+        if(employee_sortEmployee(pArrayListEmployee))
+        {
+            error= 0;
+        }
+        else
+        {
+            printf("Hubo un error al ordenar los empleados.\n");
+        }
+    }
+    system("pause");
+    return error;
 }
 
 /** \brief Guarda los datos de los empleados en el archivo data.csv (modo texto).
@@ -180,7 +204,7 @@ int controller_saveAsText(char* path, LinkedList* pArrayListEmployee)
     FILE* pF = fopen(path,"w");
     Employee* auxEmployee;
 
-     if(path!=NULL && pArrayListEmployee!=NULL)
+    if(path!=NULL && pArrayListEmployee!=NULL)
     {
         if(pF != NULL)
         {

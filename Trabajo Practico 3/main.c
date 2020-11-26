@@ -28,7 +28,7 @@ int main()
 {
     int flagLoadText=0;
     int flagLoadBinary=0;
-    int flagAddEmp=0;
+
     int option = 0;
     char confirmacionSalida = 'n';
     LinkedList* listaEmpleados = ll_newLinkedList();
@@ -48,7 +48,7 @@ int main()
                 {
                     if(!controller_loadFromText("data.csv",listaEmpleados))
                     {
-                        printf("El archivo de texto fue cargado con exito.\n\n");
+                        printf("\n\nEl archivo de texto fue cargado con exito.\n\n");
                         flagLoadText=1;
                     }
                     else
@@ -70,11 +70,11 @@ int main()
                     if(!controller_loadFromBinary("data.bin",listaEmpleados))
                     {
                         flagLoadBinary=1;
-                        printf("El Archivo binario fue cargado con exito.\n\n");
+                        printf("\n\nEl Archivo binario fue cargado con exito.\n\n");
                     }
                     else
                     {
-                        printf("Hubo un error en el proceso de cargado del archivo de binario.\n\n");
+                        printf("\n\nHubo un error en el proceso de cargado del archivo de binario.\n\n");
                     }
                 }
                 else
@@ -91,12 +91,11 @@ int main()
                 {
                     if(!controller_addEmployee(listaEmpleados))
                     {
-                        flagAddEmp=1;
-                        printf("El empleado fue cargado correctamente.\n\n");
+                        printf("\n\nEl empleado fue cargado correctamente.\n\n");
                     }
                     else
                     {
-                        printf("Hubo un error en el proceso de alta del empleado.\n\n");
+                        printf("\n\nHubo un error en el proceso de alta del empleado.\n\n");
                     }
                 }
                 else
@@ -106,22 +105,34 @@ int main()
                 }
                 system("pause");
                 break;
-
-
             case 4://MODIFICAR EMPLEADO
+                if(flagLoadText || flagLoadBinary)
+                {
+                    if(!controller_editEmployee(listaEmpleados))
+                    {
+                        printf("\n\nEl empleado fue dado de modificado correctamente.\n\n");
+                    }
+                    else
+                    {
+                        printf("\n\nHubo un error en el proceso de modificacion del empleado.\n\n");
+                    }
+                }
+                else
+                {
+                    printf("\n- Error\n Tiene que cargar los archivos primero.\n\n");
+                }
+                system("pause");
                 break;
-
-
             case 5://BAJA EMPLEADO
                 if(flagLoadText || flagLoadBinary)
                 {
                     if(!controller_removeEmployee(listaEmpleados))
                     {
-                        printf("El empleado fue dado de baja correctamente.\n\n");
+                        printf("\n\nEl empleado fue dado de baja correctamente.\n\n");
                     }
                     else
                     {
-                        printf("Hubo un error en el proceso de baja del empleado.\n\n");
+                        printf("\n\nHubo un error en el proceso de baja del empleado.\n\n");
                     }
                 }
                 else
@@ -137,7 +148,7 @@ int main()
                 {
                     if(controller_ListEmployee(listaEmpleados))
                     {
-                        printf("Hubo un error en el proceso de listado de los empleados.\n\n");
+                        printf("\n\nHubo un error en el proceso de listado de los empleados.\n\n");
                     }
                 }
                 else
@@ -149,17 +160,28 @@ int main()
 
 
             case 7://ORDENAR EMPLEADOS
+                if(flagLoadText || flagLoadBinary)
+                {
+                    if(controller_sortEmployee(listaEmpleados))
+                    {
+                        printf("\n\nHubo un error en el proceso de listado de los empleados.\n\n");
+                    }
+                }
+                else
+                {
+                    printf("\n- Error\n Tiene que cargar los archivos primero.\n\n");
+                }
                 break;
 
 
             case 8://SALVA TEXTO
                 if(!controller_saveAsText("data.csv",listaEmpleados))
                 {
-                    printf("TODO OK.\n\n");
+                    printf("\n\nEl proceso de guardado listado de los empleados como texto fue llevado a cabo correctamente.\n\n");
                 }
                 else
                 {
-                    printf("ALGO MAL.\n\n");
+                    printf("\n\nHubo un error en el proceso de guardado listado de los empleados como texto.\n\n");
                 }
                 break;
 
@@ -167,11 +189,11 @@ int main()
             case 9://SALVA BINARIO
                 if(!controller_saveAsBinary("data.bin",listaEmpleados))
                 {
-                    printf("TODO OK.\n\n");
+                    printf("\n\nEl proceso de guardado listado de los empleados como binario fue llevado a cabo correctamente.\n\n");
                 }
                 else
                 {
-                    printf("ALGO MAL.\n\n");
+                    printf("\n\nHubo un error en el proceso de guardado listado de los empleados como binario.\n\n");
                 }
                 break;
 
@@ -180,8 +202,7 @@ int main()
                 printf("\n- Estas seguro que deseas salir? (Si = s)\n>");
                 fflush(stdin);
                 scanf("%c",&confirmacionSalida);
-                tolower(confirmacionSalida);
-                if(confirmacionSalida!='s')
+                if(confirmacionSalida!='s' || confirmacionSalida!='S')
                 {
                     option=0;
                 }
