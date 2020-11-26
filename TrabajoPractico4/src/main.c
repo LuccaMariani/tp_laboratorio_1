@@ -16,16 +16,15 @@ void menu();
 
 int main()
 {
-
-        //startTesting(1);  // ll_newLinkedList
-        //startTesting(2);  // ll_len
-        //startTesting(3);  // getNode - test_getNode
-        //startTesting(4);  // addNode - test_addNode
-        //startTesting(5);  // ll_add
-        //startTesting(6);  // ll_get
-        //startTesting(7);  // ll_set
-        //startTesting(8);  // ll_remove
-
+        /*
+        startTesting(1);  // ll_newLinkedList
+        startTesting(2);  // ll_len
+        startTesting(3);  // getNode - test_getNode
+        startTesting(4);  // addNode - test_addNode
+        startTesting(5);  // ll_add
+        startTesting(6);  // ll_get
+        startTesting(7);  // ll_set
+        startTesting(8);  // ll_remove
         startTesting(9);  // ll_clear
         startTesting(10); // ll_deleteLinkedList
         startTesting(11); // ll_indexOf
@@ -39,15 +38,22 @@ int main()
         startTesting(19); // ll_sort
 
         system("pause");
+        */
 
 
     int flagLoadText=0;
     int flagLoadBinary=0;
-    int flagAddEmp=0;
-    int option = 0;
-    char confirmacionSalida = 'n';
 
-    LinkedList* listaEmpleados = ll_newLinkedList();
+    int option = 0;
+    int confirmacionSalida;
+
+    LinkedList* listaEmpleados = NULL;
+    LinkedList* listaEmpleados_copia = NULL;
+    LinkedList* listaEmpleados_subLista = NULL;
+
+    listaEmpleados = ll_newLinkedList();
+    listaEmpleados_copia = ll_newLinkedList();
+    listaEmpleados_subLista = ll_newLinkedList();
 
     do{
         system("cls");
@@ -55,7 +61,7 @@ int main()
 
         printf("\n- Ingrese una opcion del menu.\n>");
         fflush(stdin);
-        scanf("%d",&option);
+        validar_Entero(&option);
 
         switch(option)
         {
@@ -103,16 +109,15 @@ int main()
 
 
             case 3://ALTA EMPLEADO
-                if(flagLoadText || flagLoadBinary)
+                if(!ll_isEmpty(listaEmpleados))
                 {
                     if(!controller_addEmployee(listaEmpleados))
                     {
-                        flagAddEmp=1;
-                        printf("El empleado fue cargado correctamente.\n\n");
+                        printf("\n\nEl empleado fue cargado correctamente.\n\n");
                     }
                     else
                     {
-                        printf("Hubo un error en el proceso de alta del empleado.\n\n");
+                        printf("\n\nHubo un error en el proceso de alta del empleado.\n\n");
                     }
                 }
                 else
@@ -125,11 +130,26 @@ int main()
 
 
             case 4://MODIFICAR EMPLEADO
+                if(!ll_isEmpty(listaEmpleados))
+                {
+                    if(!controller_editEmployee(listaEmpleados))
+                    {
+                        printf("\n\nEl empleado fue dado de modificado correctamente.\n\n");
+                    }
+                    else
+                    {
+                        printf("\n\nHubo un error en el proceso de modificacion del empleado.\n\n");
+                    }
+                }
+                else
+                {
+                    printf("\n- Error\n Tiene que cargar los archivos primero.\n\n");
+                }
                 break;
 
 
             case 5://BAJA EMPLEADO
-                if(flagLoadText || flagLoadBinary)
+                if(!ll_isEmpty(listaEmpleados))
                 {
                     if(!controller_removeEmployee(listaEmpleados))
                     {
@@ -149,11 +169,60 @@ int main()
 
 
             case 6://LISTA EMPLEADO
-                if(flagLoadText || flagLoadBinary)
+                if(!ll_isEmpty(listaEmpleados))
                 {
                     if(controller_ListEmployee(listaEmpleados))
                     {
-                        printf("Hubo un error en el proceso de listado de los empleados.\n\n");
+                        printf("\n\nHubo un error en el proceso de listado de los empleados.\n\n");
+                    }
+                }
+                else
+                {
+                    printf("\n- Error\n Tiene que cargar los archivos primero.\n\n");
+                }
+                system("pause");
+                break;
+            case 7://LISTA EMPLEADO COPIA
+                if(ll_isEmpty(listaEmpleados_copia))
+                {
+                    if(controller_ListEmployee(listaEmpleados_copia))
+                    {
+                        printf("\n\nHubo un error en el proceso de listado de los empleados.\n\n");
+                    }
+                }
+                else
+                {
+                    printf("\n- Error\n Tiene que crear la copia de la lista primero.\n\n");
+                }
+                system("pause");
+                break;
+
+
+            case 8://ORDENAR EMPLEADOS
+                if(!ll_isEmpty(listaEmpleados))
+                {
+                    if(controller_sortEmployee(listaEmpleados))
+                    {
+                        printf("\n\nHubo un error en el proceso de listado de los empleados.\n\n");
+                    }
+                }
+                else
+                {
+                    printf("\n- Error\n Tiene que cargar los archivos primero.\n\n");
+                }
+                break;
+            case 9://REALIZAR COPIA ll_clone
+                if(!ll_isEmpty(listaEmpleados))
+                {
+                    listaEmpleados_copia=ll_clone(listaEmpleados);
+
+                    if(ll_containsAll(listaEmpleados, listaEmpleados_copia) && ll_containsAll(listaEmpleados_copia, listaEmpleados))
+                    {
+                        printf("\n\nHubo un error en el proceso de clonado de los empleados.\n\n");
+                    }
+                    else
+                    {
+                        printf("\n\nLa lista principal fue clonada con exito.\n\n");
                     }
                 }
                 else
@@ -163,43 +232,83 @@ int main()
                 system("pause");
                 break;
 
-
-            case 7://ORDENAR EMPLEADOS
-                break;
-
-
-            case 8://SALVA TEXTO
-                if(!controller_saveAsText("data.csv",listaEmpleados))
+            case 10://CREAR SUBLISTA
+                if(!ll_isEmpty(listaEmpleados))
                 {
-                    printf("TODO OK.\n\n");
+                    if(controller_subListEmployee(listaEmpleados, listaEmpleados_subLista))
+                    {
+                        printf("\n\nHubo un error en el proceso de sub listado de los empleados.\n\n");
+                    }
                 }
                 else
                 {
-                    printf("ALGO MAL.\n\n");
+                    printf("\n- Error\n Tiene que cargar los archivos primero.\n\n");
                 }
+                system("pause");
                 break;
 
-
-            case 9://SALVA BINARIO
-                if(!controller_saveAsBinary("data.bin",listaEmpleados))
+            case 11://SALVA TEXTO COPIA
+                if(!ll_isEmpty(listaEmpleados_copia))
                 {
-                    printf("TODO OK.\n\n");
+                    if(!controller_saveAsText("data.csv",listaEmpleados))
+                    {
+                        printf("\n\nEl proceso de guardado listado copia, de los empleados como texto fue llevado a cabo correctamente.\n\n");
+                    }
+                    else
+                    {
+                        printf("\n\nHubo un error en el proceso de guardado listado copia, de los empleados como texto.\n\n");
+                    }
                 }
                 else
                 {
-                    printf("ALGO MAL.\n\n");
+                    printf("\n- Error\n Tiene que crear la copia de la lista, antes de guardarla.\n\n");
+                }
+                break;
+            case 12://SALVA TEXTO
+                if(!ll_isEmpty(listaEmpleados))
+                {
+                    if(!controller_saveAsText("data.csv",listaEmpleados))
+                    {
+                        printf("\n\nEl proceso de guardado listado de los empleados como texto fue llevado a cabo correctamente.\n\n");
+                    }
+                    else
+                    {
+                        printf("\n\nHubo un error en el proceso de guardado listado de los empleados como texto.\n\n");
+                    }
+                }
+                else
+                {
+                    printf("\n- Error\n Tiene que cargar los archivos primero.\n\n");
                 }
                 break;
 
 
-            case 10://SALE PROGRAMA
-                printf("\n- Estas seguro que deseas salir? (Si = s)\n>");
+            case 13://SALVA BINARIO
+                if(!ll_isEmpty(listaEmpleados))
+                {
+                    if(!controller_saveAsBinary("data.bin",listaEmpleados))
+                    {
+                        printf("\n\nEl proceso de guardado listado de los empleados como binario fue llevado a cabo correctamente.\n\n");
+                    }
+                    else
+                    {
+                        printf("\n\nHubo un error en el proceso de guardado listado de los empleados como binario.\n\n");
+                    }
+                }
+                else
+                {
+                    printf("\n- Error\n Tiene que cargar los archivos primero.\n\n");
+                }
+                break;
+
+
+            case 0://SALE PROGRAMA
+                printf("\n- Estas seguro que deseas salir? (Si = 1) (No = 0)\n > ");
                 fflush(stdin);
-                scanf("%c",&confirmacionSalida);
-                //tolower(confirmacionSalida);
-                if(confirmacionSalida!='s')
+                validar_Entero(&confirmacionSalida);
+                if(confirmacionSalida==1)
                 {
-                    option=0;
+                    option=99;
                 }
                 break;
             default:
@@ -207,8 +316,12 @@ int main()
                 break;
         }
 
-    }while(option != 10);
+    }while(option != 99);
     return 0;
+
+    ll_deleteLinkedList(listaEmpleados_copia);
+    ll_deleteLinkedList(listaEmpleados);
+
 }
 
 void menu()
@@ -221,10 +334,14 @@ void menu()
     printf(" 4. Modificar datos de empleado.\n");
     printf(" 5. Baja de empleado.\n");
     printf(" 6. Listar empleados.\n");
-    printf(" 7. Ordenar empleados.\n");
-    printf(" 8. Guardar los datos de los empleados en el archivo data.csv (modo texto).\n");
-    printf(" 9. Guardar los datos de los empleados en el archivo data.csv (modo binario).\n");
-    printf("10. Salir.\n");
+    printf(" 6. Listar copia de lista empleados.\n");
+    printf(" 8. Ordenar empleados.\n");
+    printf(" 9. Realizar copia de la lista principal.\n");
+    printf(" 10. Crear sublista entre dos indices.\n");
+    printf(" 11. Guardar los datos de la copia lista empleados en el archivo data_copia.csv (modo texto).\n");
+    printf(" 12. Guardar los datos de los empleados en el archivo data.csv (modo texto).\n");
+    printf(" 13. Guardar los datos de los empleados en el archivo data.csv (modo binario).\n");
+    printf(" 0. Salir.\n");
 }
 
 

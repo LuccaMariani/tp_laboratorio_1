@@ -479,9 +479,9 @@ LinkedList* ll_subList(LinkedList* this,int from,int to)
 */
 LinkedList* ll_clone(LinkedList* this)
 {
-    LinkedList* cloneArray = NULL;
+    LinkedList* cloneArray=NULL;
 
-    cloneArray = ll_subList(this, 0, ll_len(this));//desde 0 hasta el tamanio de this
+    cloneArray= ll_subList(this, 0, ll_len(this));//desde 0 hasta el tamanio de this
 
     return cloneArray;
 }

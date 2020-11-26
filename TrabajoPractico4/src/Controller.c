@@ -7,27 +7,7 @@
 #include "Juegos.h"
 #include "Controller.h"
 #include "parser.h"
-
-//ll_len
-//ll_get
-
-/*
-
-LinkedList* ll_newLinkedList(void);
-int ll_len(LinkedList* this);
-Node* test_getNode(LinkedList* this, int nodeIndex);
-int test_addNode(LinkedList* this, int nodeIndex,void* pElement);
-int ll_add
-void* ll_get(LinkedList* this, int index);
-int ll_set(LinkedList* this, int index,void* pElement);
-int ll_remove(LinkedList* this,int index);
-int ll_clear(LinkedList* this);
-int ll_deleteLinkedList(LinkedList* this);
-int ll_indexOf(LinkedList* this, void* pElement);
-int ll_isEmpty(LinkedList* this);
-int ll_push(LinkedList* this, int index, void* pElement);
-
-*/
+#include "Funciones.h"
 
 /** \brief Carga los datos de los empleados desde el archivo data.csv (modo texto).
  *
@@ -111,7 +91,18 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_editEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+        int error=-1;
+
+    if(pArrayListEmployee !=NULL)
+    {
+        system("cls");
+        printf("    *Modificar Empleados*\n\n");
+        if(employee_editEmployee(pArrayListEmployee))
+        {
+            error= 0;
+        }
+    }
+    return error;
 }
 
 /** \brief Baja de empleado
@@ -180,7 +171,133 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_sortEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+
+    int error= 0;
+    int opcion;
+
+    if(pArrayListEmployee !=NULL)
+    {
+        printf("Escriba el indice del critero de ordenamiento de la lista:\n");
+        printf(" 1 -Id\n 2 -Nombre\n 3 -Horas Trabajadas\n 4 -Sueldo\n");
+        printf("\nIngrese opcion:\n >");
+        fflush(stdin);
+        validar_Entero(&opcion);
+
+        printf("\nOrdenando empleados, por favor espere...\n");
+        switch(opcion)
+        {
+            case 1:
+                ll_sort(pArrayListEmployee, ordenar_id, 1);
+                break;
+            case 2:
+                ll_sort(pArrayListEmployee, ordenar_nombre, 1);
+                break;
+            case 3:
+                ll_sort(pArrayListEmployee, ordenar_horas, 1);
+                break;
+            case 4:
+                ll_sort(pArrayListEmployee, ordenar_sueldo, 1);
+                break;
+            default:
+                error= 0;
+                printf(" Esta opcion no existe\n");
+                break;
+        }
+        error= 1;
+    }
+
+    return error;
+}
+
+int controller_cloneEmployee(LinkedList* pArrayListEmployee, LinkedList* pArrayListEmployee_copia)
+{
+    int error=-1;
+
+    if(pArrayListEmployee!=NULL)
+    {
+        pArrayListEmployee_copia=ll_clone(pArrayListEmployee);
+        error=0;
+        //error=employee_clonarLista(pArrayListEmployee, pArrayListEmployee_copia);
+    }
+
+    return error;
+}
+
+int controller_subListEmployee(LinkedList* pArrayListEmployee, LinkedList* pArrayEmployee_subList)
+{
+
+    int error=-1;
+
+    int principio;
+    int fin;
+    int tamLista;
+    int flagCorrecto1=0;
+    int flagCorrecto2=0;
+
+    int confirma;
+
+    if(pArrayListEmployee!=NULL)
+    {
+        tamLista=ll_len(pArrayListEmployee);
+
+        system("cls");
+        printf("\n\n    *Crear SubListado Empleados*\n\n");
+        printf(" - Listado original:\n\n");
+        employee_listEmployee(pArrayListEmployee);
+
+        while(flagCorrecto1==0)
+        {
+            printf("\n\n - Donde iniciara el sub listado?\n > ");
+            validar_Entero(&principio);
+
+            if(principio>=tamLista-1)
+            {
+                 printf("\n\n - Error\n Tiene que seleccionar un numero mas chico que la misma lista.");
+            }
+            else
+            {
+                flagCorrecto1=1;
+            }
+        }
+
+        while(flagCorrecto2==0)
+        {
+            printf("\n\n - Donde finalizara el sub listado?\n > ");
+            validar_Entero(&fin);
+
+            if(fin<=principio)
+            {
+                 printf("\n\n - Error\n Tiene que seleccionar un numero mas grande que el inicio.");
+            }
+            else
+            {
+                flagCorrecto2=1;
+            }
+        }
+
+        pArrayEmployee_subList=ll_subList(pArrayListEmployee,principio,fin);
+
+        system("cls");
+        printf("\n\n    *SubListado de Empleados*\n\n");
+        employee_listEmployee(pArrayEmployee_subList);
+
+        printf("\n\nDesea guardar este sub listado?\n (Si = 1) (No = 0)\n > ");
+        validar_Entero(&confirma);
+        if(confirma==0)
+        {
+            printf("La sub lista fue eliminada.");
+            ll_deleteLinkedList(pArrayEmployee_subList);
+        }
+        else
+        {
+            printf("La sub lista fue guardada temporalmente.");
+        }
+        error=0;
+    }
+
+
+
+    return error;
 }
 
 /** \brief Guarda los datos de los empleados en el archivo data.csv (modo texto).

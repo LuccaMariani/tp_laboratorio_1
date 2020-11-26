@@ -7,10 +7,6 @@
 #include "LinkedList.h"
 #include "Funciones.h"
 
-//ll_get
-//ll_add
-//ll_len
-//ll_remove
 
 /*
 
@@ -29,6 +25,8 @@ int ll_isEmpty(LinkedList* this);
 int ll_push(LinkedList* this, int index, void* pElement);
 
 */
+
+
 Employee* employee_new()
 {
     Employee* auxEmployee = (Employee*)malloc(sizeof(Employee));
@@ -310,3 +308,228 @@ int employee_buscarIdEmployee(int id, LinkedList* pArrayEmp)
     }
     return retornoID;
 }
+
+
+int employee_editEmployee(LinkedList* pArrayListEmployee)
+{
+    int error = 0;
+
+    Employee* auxEmployee;
+
+    int flagContinuar=1;
+
+    int id;
+    int indice;
+    int opcion;
+    int seguir;
+
+    char nuevoNombre[128];
+    Employee* nuevoHoras;
+    int nuevoSueldo;
+
+    if(pArrayListEmployee !=NULL)
+    {
+        printf("\n\n");
+        employee_listEmployee(pArrayListEmployee);
+
+        printf("\n\n- Ingrese el Id del empleado a modificar:\n >");
+        fflush(stdin);
+        validar_Entero(&id);
+
+        indice=employee_buscarIdEmployee(id, pArrayListEmployee);
+
+        if(indice==-1)
+        {
+            printf("\n\n- El Id ingresado (%d) no existe en la lista.\nRegresando al menu...\n\n",id);
+        }
+        else
+        {
+            auxEmployee= (Employee*)ll_get(pArrayListEmployee,indice);
+
+            while(flagContinuar)
+            {
+                printf("\n\n - Empleado seleccionado :\n");
+                printf("  Id  | Nombre               | Horas     | Sueldo\n");
+                employee_mostrarEmployee((Employee*)ll_get(pArrayListEmployee,indice));
+
+                printf("\n\n Escriba el indice de que desea modificar del empleado:\n");
+                printf(" 1 -Nombre\n 2 -Horas\n 3 -Sueldo\n 4 -Cancelar modificacion\n");
+                printf("\nIngrese opcion:\n >");
+                fflush(stdin);
+                validar_Entero(&opcion);
+
+                switch(opcion)
+                {
+                case 1:
+                    printf("\n-Ingrese el nuevo nombre:\n > ");
+                    fflush(stdin);
+                    validar_StringCaracteres(&nuevoNombre);
+
+                    strcpy(auxEmployee->nombre, nuevoNombre);
+                    break;
+                case 2:
+                    printf("\n-Ingrese horas trabajadas:\n > ");
+                    fflush(stdin);
+                    validar_Entero(&nuevoHoras);
+
+                    auxEmployee->horasTrabajadas= nuevoHoras;
+                    break;
+                case 3:
+                    printf("\n-Ingrese sueldo:\n > ");
+                    fflush(stdin);
+                    validar_Entero(&nuevoSueldo);
+
+                    auxEmployee->sueldo= nuevoSueldo;
+                    break;
+                case 4:
+                    break;
+                default:
+                    printf(" Esta opcion no existe\n");
+                }
+
+                printf("\n\nDesea salir del menu de modificacion en este empleado?\n\n");
+                printf("  Id  | Nombre               | Horas     | Sueldo\n");
+                employee_mostrarEmployee((Employee*)ll_get(pArrayListEmployee,indice));
+                printf("\n(SI = 1) (NO = 0)\n > ");
+                validar_Entero(seguir);
+
+
+                if(seguir)
+                {
+
+                    flagContinuar=0;
+                    error=1;
+                }
+                else
+                {
+                    flagContinuar=1;
+                }
+
+            }
+        }
+
+    }
+
+    return error;
+}
+
+int employee_clonarLista(LinkedList* pListaOriginal, LinkedList* pLista_copia)
+{
+    int error=-1;
+
+    pLista_copia=ll_clone(pListaOriginal);
+
+    if(pLista_copia!=NULL)
+    {
+        error=0;
+    }
+
+    return error;
+}
+
+
+int ordenar_id(void* x, void* y)
+{
+    int error= -1;
+    Employee* pA= (Employee*)x;
+    Employee* pB= (Employee*)y;
+
+    if(x !=NULL && y !=NULL)
+    {
+        if(pA->id > pB->id)
+        {
+            error= 1;
+        }
+        else if(pA->id < pB->id)
+        {
+            error= -1;
+        }
+        else
+        {
+            error= 0;
+        }
+    }
+
+    return error;
+
+}
+
+int ordenar_nombre(void* x, void* y)
+{
+    int error= -1;
+    Employee* pA= (Employee*)x;
+    Employee* pB= (Employee*)y;
+
+    if(x !=NULL && y !=NULL)
+    {
+
+        if(stricmp(pA->nombre,pB->nombre)>0)
+        {
+            error = 1;
+        }
+        else if(stricmp(pA->nombre,pB->nombre)<0)
+        {
+            error= -1;
+        }
+        else
+        {
+            error= 0;
+        }
+    }
+
+    return error;
+}
+
+
+int ordenar_horas(void* x, void* y)
+{
+    int error = 0;
+    Employee* pA= (Employee*)x;
+    Employee* pB= (Employee*)y;
+
+    if(x !=NULL && y !=NULL)
+    {
+        if(pA->horasTrabajadas > pB->horasTrabajadas)
+        {
+            error= 1;
+        }
+        else if(pA->horasTrabajadas < pB->horasTrabajadas)
+        {
+            error= -1;
+        }
+        else
+        {
+            error= 0;
+        }
+    }
+
+    return error;
+}
+
+
+int ordenar_sueldo(void* x, void* y)
+{
+    int error= -1;
+
+    Employee* pA= (Employee*)x;
+    Employee* pB= (Employee*)y;
+
+    if(x !=NULL && y !=NULL)
+    {
+        if(pA->sueldo > pB->sueldo)
+        {
+            error= 1;
+        }
+        else if(pA->sueldo < pB->sueldo)
+        {
+            error= -1;
+        }
+        else
+        {
+            error= 0;
+        }
+    }
+
+    return error;
+}
+
